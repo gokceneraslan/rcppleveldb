@@ -1,0 +1,14 @@
+Package: RcppLevelDB
+Type: Package
+Title: 'Rcpp' Bindings for Google 'leveldb'
+Version: 0.1
+Date: 2015-09-18
+Author: Gokcen Eraslan, Dirk Eddelbuettel
+Maintainer: Gokcen Eraslan <gokcen.eraslan@gmail.com>
+Description: R bindings for 'leveldb' key/value store, based on RcppRedis code
+License: GPL (>= 2)
+LazyData: TRUE
+Imports:
+    Rcpp (>= 0.12.1), methods, RApiSerialize
+LinkingTo: Rcpp, RApiSerialize
+SystemRequirements: The leveldb library from https://github.com/google/leveldb
