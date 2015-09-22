@@ -57,7 +57,7 @@ rm(ldb) #to close the database safely
 - Add support for BloomFilter policies, WriteBatch, and Iterators
 - Add RepairDB and DestroyDB functions
 - Something like `Structured Get` operation: create a data.frame out of values of the given query keys, when the values have a pre-defined structure
-- (plyvel)[https://plyvel.readthedocs.org/en/latest/api.html] is a nice leveldb binding example to get some influence regarding new features
+- [plyvel](https://plyvel.readthedocs.org/en/latest/api.html) is a nice leveldb binding example to get some influence regarding new features
 
 ### Author
 
