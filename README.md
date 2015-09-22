@@ -4,7 +4,7 @@ RcppLevelDB is a Rcpp based LevelDB binding for R
 
 ### Dependencies
 
-- [leveldb](https://github.com/google/leveldb), leveldb, eg via [libleveldb-dev](https://packages.debian.org/sid/libleveldb-dev) on Debian or Ubuntu
+- [leveldb](https://github.com/google/leveldb), leveldb C++ library, e.g. via [libleveldb-dev](https://packages.debian.org/sid/libleveldb-dev) on Debian or Ubuntu
 - [Rcpp](https://github.com/RcppCore/Rcpp) for seamless R and C++ integration
 - [RApiSerialize](https://github.com/eddelbuettel/rapiserialize) for C-level serialization from the R API
 
@@ -49,6 +49,15 @@ ldb$Get(c('key1', 'anotherkey'))
 rm(ldb) #to close the database safely
 
 ```
+
+### TODO
+
+- Expose `Options/ReadOptions/WriteOptions` structs to R
+- Add default arguments to constructor and Put/Get/Delete methods e.g. `create_if_missing=TRUE`, `sync=FALSE` etc.
+- Add support for BloomFilter policies, WriteBatch, and Iterators
+- Add RepairDB and DestroyDB functions
+- Something like `Structured Get` operation: create a data.frame out of values of the given query keys, when the values have a pre-defined structure
+- (plyvel)[https://plyvel.readthedocs.org/en/latest/api.html] is a nice leveldb binding example to get some influence regarding new features
 
 ### Author
 
