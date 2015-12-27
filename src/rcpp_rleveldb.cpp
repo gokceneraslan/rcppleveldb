@@ -31,6 +31,7 @@ class LevelDB {
 private:
 
   leveldb::DB* _pldb;                // private pointer to leveldb
+  leveldb::Iterator* _pit;            // single managed iterator
 
   // open LevelDB database
   void init(std::string dbfilename, leveldb::Options options)  {
@@ -46,9 +47,12 @@ public:
     leveldb::Options options;
     options.create_if_missing = true;
     init(dbfilename, options);
+    _pit = NULL;
   }
 
   ~LevelDB() {
+    if(_pit)
+      delete _pit;
     delete _pldb;
     _pldb = NULL;                // just to be on the safe side
   }
@@ -110,6 +114,30 @@ public:
     else
       return l;
   }
+
+  Rcpp::LogicalVector StartIteration() {
+    if(_pit)
+      delete _pit;
+    _pit = _pldb->NewIterator(leveldb::ReadOptions());
+    _pit->SeekToFirst();
+    Rcpp::LogicalVector bv(1);
+    bv[0] = _pit->Valid();
+    return bv;
+  }
+
+  Rcpp::List IterNext() {
+    if(!_pit->Valid())
+      return Rcpp::wrap(NA_LOGICAL);
+    std::string key = _pit->key().ToString();
+    std::string value = _pit->value().ToString();
+    _pit->Next();
+    Rcpp::List tuple(2);
+    tuple[0] = key;
+    Rcpp::RawVector x(value.size());
+    std::copy( value.begin(), value.end(), x.begin() ) ;
+    tuple[1] = unserializeFromRaw(x);
+    return tuple;
+  }
 };
 
 
@@ -122,5 +150,7 @@ RCPP_MODULE(LevelDB) {
   .method("Put", &LevelDB::Put, "Calls Put method of the LevelDB object, serializes internally")
   .method("Delete", &LevelDB::Delete, "Calls Delete method of the LevelDB object, serializes internally")
   .method("Get",  &LevelDB::Get,   "Vectorized Get method, deserializes internally")
+  .method("StartIteration",  &LevelDB::StartIteration,   "Start a iteration over the LevelDB object. Call IterNext to read key,value pairs")
+  .method("IterNext",  &LevelDB::IterNext, "Perform next iteration, returning a key,value pair in a list. Otherwise NULL if reached end of DB")
   ;
 }
