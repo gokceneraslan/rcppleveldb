@@ -2,8 +2,6 @@
 
 RcppLevelDB is a Rcpp based LevelDB binding for R
 
-Support for iterators was added by Gabe Rudy.
-
 ### Dependencies
 
 - [leveldb](https://github.com/google/leveldb), leveldb C++ library, e.g. via [libleveldb-dev](https://packages.debian.org/sid/libleveldb-dev) on Debian or Ubuntu
@@ -92,9 +90,11 @@ gc() # remove all handles
 - Something like `Structured Get` operation: create a data.frame out of values of the given query keys, when the values have a pre-defined structure
 - [plyvel](https://plyvel.readthedocs.org/en/latest/api.html) is a nice leveldb binding example to get some influence regarding new features
 
-### Author
+### Authors
 
 Gökcen Eraslan, based on RcppRedis by Dirk Eddelbuettel
+
+Support for iterators was added by Gabe Rudy.
 
 ### License
 
