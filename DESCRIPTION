@@ -1,9 +1,9 @@
 Package: RcppLevelDB
 Type: Package
 Title: 'Rcpp' Bindings for Google 'leveldb'
-Version: 0.1
+Version: 0.2
 Date: 2015-09-18
-Author: Gokcen Eraslan, Dirk Eddelbuettel
+Author: Gokcen Eraslan, Dirk Eddelbuettel, Gabe Rudy
 Maintainer: Gokcen Eraslan <gokcen.eraslan@gmail.com>
 Description: R bindings for 'leveldb' key/value store, based on RcppRedis code
 License: GPL (>= 2)

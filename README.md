@@ -2,6 +2,8 @@
 
 RcppLevelDB is a Rcpp based LevelDB binding for R
 
+Support for iterators was added by Gabe Rudy.
+
 ### Dependencies
 
 - [leveldb](https://github.com/google/leveldb), leveldb C++ library, e.g. via [libleveldb-dev](https://packages.debian.org/sid/libleveldb-dev) on Debian or Ubuntu
@@ -36,6 +38,38 @@ ldb$Get(c('key1', 'anotherkey'))
 #>[[2]]
 #>[1] "somevalue"
 #>
+
+#Iteration
+ldb$StartIteration()
+#>[1] TRUE
+ldb$IterNext()
+#>[[1]]
+#>[1] "anotherkey"
+#>
+#>[[2]]
+#>[1] "somevalue"
+#>
+> ldb$IterNext()
+#>[[1]]
+#>[1] "key1"
+#>
+#>[[2]]
+#>[[2]]$a
+#>[1] 1 2 3
+#>
+#>[[2]]$b
+#>[1] "sometext"
+#>
+#>[[2]]$c
+#>[1] 42
+#>
+ldb$IterNext()
+#>[[1]]
+#>[1] NA
+#>
+#> 
+
+#Deletion
 ldb$Delete(c('key1', 'anotherkey'))
 #>[1] TRUE TRUE
 ldb$Get(c('key1', 'anotherkey'))
@@ -45,9 +79,8 @@ ldb$Get(c('key1', 'anotherkey'))
 #>[[2]]
 #>[1] NA
 #>
-
 rm(ldb) #to close the database safely
-
+gc() # remove all handles
 ```
 
 ### TODO
